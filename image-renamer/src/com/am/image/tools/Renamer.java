@@ -16,7 +16,7 @@ import java.util.Locale;
 
 public class Renamer {
 
-	private static final DecimalFormat df = new DecimalFormat("####");
+	private static final DecimalFormat df = new DecimalFormat("#####");
 	static {
 		df.setMinimumIntegerDigits(5);
 	}
