@@ -9,7 +9,7 @@ import java.nio.file.attribute.DosFileAttributes;
 import java.util.Comparator;
 
 /**
- * Compares two files by their creation date.
+ * Compares two files by their creation time.
  * 
  * @author amarinkovic
  *
