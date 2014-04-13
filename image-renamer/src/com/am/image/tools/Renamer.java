@@ -16,7 +16,7 @@ public class Renamer {
 	private static int counter = 0;
 
 	static {
-		df.setMinimumIntegerDigits(5);
+		df.setMinimumIntegerDigits(4);
 	}
 
 	public static void main(String[] args) throws IOException, ImageProcessingException {
@@ -32,9 +32,6 @@ public class Renamer {
 		String namePrefix = (args.length < 3 || args[2] == null || args[2].isEmpty()) ? "photo" : args[2];
 		Path targetDir = new File(target).toPath();
 		
-		DecimalFormat df = new DecimalFormat("####");
-		df.setMinimumIntegerDigits(4);
-
 		Function<Path, Date> p2d = p -> Photos.getDateTaken(p.toFile());
 
 		Files.list(new File(input).toPath())
