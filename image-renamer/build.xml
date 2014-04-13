@@ -5,12 +5,16 @@
 	<property name="res.dir" value="res" />
 	<property name="class.dir" value="bin" />
 	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="lib" />
 
 	<path id="project.class.path">
 		<pathelement location="${class.dir}" />
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
 	</path>
 
 	<target name="compile">
+		<echo>Java version ${java.version}</echo>
+		<echo>${ant.version}</echo>
 		<delete quiet="true" includeEmptyDirs="true" verbose="true">
 			<fileset dir="${class.dir}" />
 		</delete>
