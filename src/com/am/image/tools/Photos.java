@@ -1,14 +1,18 @@
 package com.am.image.tools;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.exif.ExifIFD0Directory;
 
 /**
  * Various convenience methods for working with photos
@@ -18,7 +22,18 @@ import com.drew.metadata.exif.ExifIFD0Directory;
  */
 public class Photos {
 
-	public static Date getDateTaken(File file) {
+	public static Instant getTakenNio(File file) {
+		Instant taken = null;
+		try {
+			BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+			taken = attr.creationTime().toInstant();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return taken;
+	}
+
+	public static Date getDateTakenExif(File file) {
 		Date taken = null;
 		try {
 			Metadata metadata = ImageMetadataReader.readMetadata(file);
@@ -27,17 +42,14 @@ public class Photos {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return taken;
 	}
-	
+
 	public static Date getDateModified(File file) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(file.lastModified());
 		return cal.getTime();
-	}
-	
-	public static String dateDiff(File file) {
-		return Dates.diff(getDateTaken(file), getDateModified(file));
 	}
 
 	public static Map<String, String> getMetadata(File file) {
