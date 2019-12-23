@@ -3,3 +3,7 @@ out/
 .idea/
 *.iml
 target/
+*.iml
+.idea/
+.factorypath
+.settings/
