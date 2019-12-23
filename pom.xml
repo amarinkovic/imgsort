@@ -5,14 +5,15 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mankea.tools</groupId>
-    <artifactId>img-renamer</artifactId>
+    <artifactId>imgrenamer</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
 
-        <maven.compiler.source>11.0</maven.compiler.source>
-        <maven.compiler.target>11.0</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <graalvm.version>19.3.0</graalvm.version>
 
     </properties>
 
@@ -27,6 +28,12 @@
             <artifactId>picocli</artifactId>
             <version>4.1.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.graalvm.sdk</groupId>
+            <artifactId>graal-sdk</artifactId>
+            <version>${graalvm.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -37,6 +44,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>info.picocli</groupId>
@@ -45,11 +54,32 @@
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-Aproject=${groupId}/${artifactId}</arg>
+                        <arg>-Aproject=${project.groupId}/${project.artifactId}</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.graalvm.nativeimage</groupId>
+                <artifactId>native-image-maven-plugin</artifactId>
+                <version>${graalvm.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>native-image</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>false</skip>
+                    <mainClass>io.mankea.tools.img_renamer.Application</mainClass>
+                    <imageName>${project.artifactId}</imageName>
+                    <buildArgs>
+                        --no-fallback
+                    </buildArgs>
+                    <outputDirectory>target</outputDirectory>
+                </configuration>
+            </plugin>
         </plugins>
 
     </build>

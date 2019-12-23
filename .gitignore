@@ -7,3 +7,5 @@ target/
 .idea/
 .factorypath
 .settings/
+.classpath
+.project
