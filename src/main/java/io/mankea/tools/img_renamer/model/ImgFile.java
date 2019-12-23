@@ -65,4 +65,9 @@ public class ImgFile {
     public void setCreatedAtPlain(Instant createdAtPlain) {
         this.createdAtPlain = createdAtPlain;
     }
+
+    @Override
+    public String toString() {
+        return name + " (" + getCreatedAt() + ")";
+    }
 }
