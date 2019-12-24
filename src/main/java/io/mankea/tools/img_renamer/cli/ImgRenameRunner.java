@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -53,6 +52,10 @@ public class ImgRenameRunner implements Callable<Integer> {
     }
 
     private void processFiles(ImgRenameRunner conf) throws IOException {
+
+        System.out.println(" >> Source path: " + conf.getSourcePath());
+        System.out.println(" >> Destination: " + conf.getTargetPath() + "\n\n");
+
         Path targetDir = new File(conf.getTargetPath()).toPath();
 
         List<ImgFile> fs = Files.walk(new File(conf.getSourcePath()).toPath())
@@ -66,15 +69,14 @@ public class ImgRenameRunner implements Callable<Integer> {
 
         boolean dryRun = true; // c.dryRun
 
-        if(!dryRun) {
+        if (!dryRun) {
             System.out.println(format(" >> Staring rename of %s images", fs.size()));
             counter = conf.offset;
             fs.stream().forEach(i -> {
                 try {
                     Files.copy(i.getFile().toPath(), targetDir.resolve(conf.prefix + "_" + df.format(counter++) + ".jpg"));
                 } catch (Exception e) {
-
-
+                    System.out.println(format("Error processing: {} - {}", i.getFile().getAbsolutePath(), e.getMessage()));
                 }
             });
         }
@@ -82,14 +84,9 @@ public class ImgRenameRunner implements Callable<Integer> {
 
     private void logImg(ImgFile i) {
         System.out.println(
-                i.getCreatedAt() +
-                        " [ plain: " +
-                        (i.getCreatedAtPlain() != null ? sdf.format(Date.from(i.getCreatedAtPlain())) : "\t\t\t\t\t") +
-                        " | exif: " +
-                        (i.getCreatedAtExif() != null ? sdf.format(i.getCreatedAtExif()) : "\t\t\t\t\t\t") +
-                        " | diff: " +
-                        i.daysDiff() + (i.daysDiff() < 100 ? "\t" : "") + " ] " +
-                        i.getName()
+                sdf.format(i.getCreatedAt())
+                        + " | diff: " + i.daysDiff() + (i.daysDiff() < 100 ? "\t" : "") + " | "
+                        + i.getFile().getAbsolutePath()
         );
     }
 }
