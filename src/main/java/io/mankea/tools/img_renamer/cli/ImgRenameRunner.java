@@ -55,7 +55,8 @@ public class ImgRenameRunner implements Callable<Integer> {
     private void processFiles(ImgRenameRunner conf) throws IOException {
         Path targetDir = new File(conf.getTargetPath()).toPath();
 
-        List<ImgFile> fs = Files.list(new File(conf.getSourcePath()).toPath())
+        List<ImgFile> fs = Files.walk(new File(conf.getSourcePath()).toPath())
+                .filter(Files::isRegularFile)
                 .filter(p -> p.getFileName().toString().toLowerCase().endsWith("jpg"))
                 .map(Path::toFile)
                 .map(ImgFile::new)
@@ -88,6 +89,7 @@ public class ImgRenameRunner implements Callable<Integer> {
                         (i.getCreatedAtExif() != null ? sdf.format(i.getCreatedAtExif()) : "\t\t\t\t\t\t") +
                         " | diff: " +
                         i.daysDiff() + (i.daysDiff() < 100 ? "\t" : "") + " ] " +
-                        i.getName());
+                        i.getName()
+        );
     }
 }

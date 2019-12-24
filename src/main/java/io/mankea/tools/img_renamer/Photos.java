@@ -38,7 +38,9 @@ public class Photos {
 		try {
 			Metadata metadata = ImageMetadataReader.readMetadata(file);
 			ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-			taken = dir.getDate(ExifIFD0Directory.TAG_DATETIME);
+			if (dir != null) {
+				taken = dir.getDate(ExifIFD0Directory.TAG_DATETIME);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
