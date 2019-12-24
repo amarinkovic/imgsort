@@ -1,4 +1,4 @@
-package io.mankea.tools.img_renamer;
+package io.mankea.tools.img_renamer.cli;
 
 import io.mankea.tools.img_renamer.model.ImgFile;
 import picocli.CommandLine;
@@ -72,7 +72,8 @@ public class ImgRenameRunner implements Callable<Integer> {
                 try {
                     Files.copy(i.getFile().toPath(), targetDir.resolve(conf.prefix + "_" + df.format(counter++) + ".jpg"));
                 } catch (Exception e) {
-                    e.printStackTrace();
+
+
                 }
             });
         }
