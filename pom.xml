@@ -84,7 +84,7 @@
                             <mainClass>io.mankea.tools.img_renamer.Application</mainClass>
                             <imageName>${project.artifactId}</imageName>
                             <buildArgs>
-                                --no-fallback
+                                --no-fallback --verbose -H:+AddAllCharsets
                             </buildArgs>
                             <outputDirectory>target</outputDirectory>
                         </configuration>
