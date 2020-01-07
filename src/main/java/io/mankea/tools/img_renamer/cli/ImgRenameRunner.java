@@ -9,14 +9,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import static java.lang.String.format;
 import static java.util.Comparator.comparing;
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 public class ImgRenameRunner implements Callable<Integer> {
+
+    private static final String DEFAULT_TARGET_PATH = File.separator + "tmp" + File.separator + "out";
 
     private static final DecimalFormat df = new DecimalFormat("####");
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -38,11 +45,11 @@ public class ImgRenameRunner implements Callable<Integer> {
     private boolean helpRequested = false;
 
     String getSourcePath() {
-        return paths[0];
+        return ofNullable(paths != null ? paths[0] : null).orElseThrow(() -> new IllegalArgumentException("No source path provided"));
     }
 
     String getTargetPath() {
-        return paths[1];
+        return paths != null && paths.length > 1 ? paths[1] : DEFAULT_TARGET_PATH;
     }
 
     @Override
@@ -53,10 +60,17 @@ public class ImgRenameRunner implements Callable<Integer> {
 
     private void processFiles(ImgRenameRunner conf) throws IOException {
 
+        Instant start = Instant.now();
+
         System.out.println(" >> Source path: " + conf.getSourcePath());
         System.out.println(" >> Destination: " + conf.getTargetPath() + "\n\n");
 
-        Path targetDir = new File(conf.getTargetPath()).toPath();
+        File targetFolder = new File(conf.getTargetPath());
+        if (!targetFolder.exists()) {
+            targetFolder.mkdirs();
+        }
+
+        Path targetDir = targetFolder.toPath();
 
         List<ImgFile> fs = Files.walk(new File(conf.getSourcePath()).toPath())
                 .filter(Files::isRegularFile)
@@ -80,6 +94,9 @@ public class ImgRenameRunner implements Callable<Integer> {
                 }
             });
         }
+
+        System.out.println("\nProcessing done in: " + Duration.between(start, Instant.now()).toMillis() + " ms");
+
     }
 
     private void logImg(ImgFile i) {
