@@ -6,7 +6,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mankea.tools</groupId>
     <artifactId>imgrenamer</artifactId>
+
     <version>1.0.0</version>
+
     <packaging>jar</packaging>
 
     <properties>
@@ -84,7 +86,7 @@
                             <mainClass>io.mankea.tools.img_renamer.Application</mainClass>
                             <imageName>${project.artifactId}</imageName>
                             <buildArgs>
-                                --no-fallback --verbose -H:+AddAllCharsets
+                                --no-fallback -H:+AddAllCharsets --verbose
                             </buildArgs>
                             <outputDirectory>target</outputDirectory>
                         </configuration>

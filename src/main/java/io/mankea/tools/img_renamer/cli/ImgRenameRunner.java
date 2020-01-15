@@ -35,12 +35,16 @@ public class ImgRenameRunner implements Callable<Integer> {
 
     @CommandLine.Option(names = {"-d", "--dry-run"}, description = "Dry run, does not process files, just report")
     boolean dryRun;
+
     @CommandLine.Option(names = {"-o", "--offset"}, defaultValue = "1", description = "Counter offset, index for the first element")
     int offset;
+
     @CommandLine.Option(names = {"-p", "--prefix"}, defaultValue = "photo", description = "File naming prefix")
     String prefix;
+
     @CommandLine.Parameters(paramLabel = "folders", description = "Source and target folder paths")
     String[] paths;
+
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Display this help message")
     private boolean helpRequested = false;
 
@@ -65,6 +69,10 @@ public class ImgRenameRunner implements Callable<Integer> {
         System.out.println(" >> Source path: " + conf.getSourcePath());
         System.out.println(" >> Destination: " + conf.getTargetPath() + "\n\n");
 
+        if(dryRun) {
+            System.out.println(" >> === DRY RUN MODE === <<\n");
+        }
+
         File targetFolder = new File(conf.getTargetPath());
         if (!targetFolder.exists()) {
             targetFolder.mkdirs();
@@ -81,10 +89,8 @@ public class ImgRenameRunner implements Callable<Integer> {
                 .peek(this::logImg)
                 .collect(toList());
 
-        boolean dryRun = true; // c.dryRun
-
         if (!dryRun) {
-            System.out.println(format(" >> Staring rename of %s images", fs.size()));
+            System.out.println(format("\n  >> Starting rename of %s images", fs.size()));
             counter = conf.offset;
             fs.stream().forEach(i -> {
                 try {
