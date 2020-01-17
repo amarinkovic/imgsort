@@ -1,16 +1,38 @@
 imgrenamer
 =============
 
-Simple image renaming tool
+*Simple image renaming tool*
 
-EXIF is short for Exchangeable Image File, a format that is a standard for storing interchange information in digital photography image files used by mostly all new digital cameras. It is used for storing information on the image such as shutter speed, exposure compensation, F number, what metering system was used, if a flash was used, ISO number, date and time the image was taken, white balance, auxiliary lenses that were used and resolution.
+This simple Java based command-line utility parses EXIF metadata and reads the time when photo was taken and uses it to sort and rename files chronologically. Potentially, it chould be extended to utilize more of the available metadata.
 
-This simple Java utility parses EXIF metadata and reads the time when photo was taken and uses it to sort and rename files chronologically. Should be extended to utilize more of the available metadata.
+> _EXIF is short for Exchangeable Image File, a format that is a standard for storing interchange information in digital photography image files used by mostly all new digital cameras. It is used for storing information on the image such as shutter speed, exposure compensation, F number, what metering system was used, if a flash was used, ISO number, date and time the image was taken, white balance, auxiliary lenses that were used and resolution._
 
-Build native app from source
+Build native binary from source with the following command:
 ```
 mvn clean install -Pnative
 ```
+
+## Usage instructions
+
+Add natively compiled binary from `target` folder to your path and run it like this:
+```shell script
+imgrenamer -d -p myphotos . /tmp/myphotocollection
+```
+
+Below is the listing of available command-line arguments you can pass into the app:
+```shell script
+$ imgrenamer -h
+
+ ImgRenameTool v1.0.0
+
+Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
+      [folders...]        Source and target folder paths
+  -d, --dry-run           Dry run, does not process files, just report
+  -h, --help              Display help message
+  -o, --offset=<offset>   Counter offset, index for the first element
+  -p, --prefix=<prefix>   File naming prefix
+```
+
 
 ## Notes
 
