@@ -7,12 +7,19 @@ EXIF is short for Exchangeable Image File, a format that is a standard for stori
 
 This simple Java utility parses EXIF metadata and reads the time when photo was taken and uses it to sort and rename files chronologically. Should be extended to utilize more of the available metadata.
 
+Build native app from source
 ```
 mvn clean install -Pnative
 ```
 
 ## Notes
 
+Run app from source via maven
+```java
+mvn clean compile exec:java -Dexec.mainClass="io.mankea.tools.img_renamer.Application" -Dexec.args="-d /media/aleksandar/TerraData/photo/_ajfon"
+```
+
+Native tracing args:
 ```java
 -agentlib:native-image-agent=trace-output=trace-file.json
 ```

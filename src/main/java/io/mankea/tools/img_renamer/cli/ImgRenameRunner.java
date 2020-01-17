@@ -66,11 +66,11 @@ public class ImgRenameRunner implements Callable<Integer> {
 
         Instant start = Instant.now();
 
-        System.out.println(" >> Source path: " + conf.getSourcePath());
-        System.out.println(" >> Destination: " + conf.getTargetPath() + "\n\n");
+        System.out.println(colored(" >> Source path: ", 245) + conf.getSourcePath());
+        System.out.println(colored(" >> Destination: ", 245) + conf.getTargetPath() + "\n");
 
         if(dryRun) {
-            System.out.println(" >> === DRY RUN MODE === <<\n");
+            System.out.println(" >> dry run\n");
         }
 
         File targetFolder = new File(conf.getTargetPath());
@@ -80,6 +80,7 @@ public class ImgRenameRunner implements Callable<Integer> {
 
         Path targetDir = targetFolder.toPath();
 
+        System.out.println("Scanning files:\n");
         List<ImgFile> fs = Files.walk(new File(conf.getSourcePath()).toPath())
                 .filter(Files::isRegularFile)
                 .filter(p -> p.getFileName().toString().toLowerCase().endsWith("jpg"))
@@ -111,5 +112,9 @@ public class ImgRenameRunner implements Callable<Integer> {
                         + " | diff: " + i.daysDiff() + (i.daysDiff() < 100 ? "\t" : "") + " | "
                         + i.getFile().getAbsolutePath()
         );
+    }
+
+    private String colored(String input, int color) {
+        return CommandLine.Help.Ansi.AUTO.string("@|fg(" + color + ") " + input + "|@");
     }
 }
