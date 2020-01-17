@@ -1,12 +1,12 @@
-package io.mankea.tools.img_renamer.model;
+package io.mankea.tools.imgrenamer.model;
 
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 
-import static io.mankea.tools.img_renamer.Photos.getDateTakenExif;
-import static io.mankea.tools.img_renamer.Photos.getTakenNio;
+import static io.mankea.tools.imgrenamer.Photos.getDateTakenExif;
+import static io.mankea.tools.imgrenamer.Photos.getTakenNio;
 
 public class ImgFile {
 

@@ -38,7 +38,7 @@ Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
 
 Run app from source via maven
 ```java
-mvn clean compile exec:java -Dexec.mainClass="io.mankea.tools.img_renamer.Application" -Dexec.args="-d /media/aleksandar/TerraData/photo/_ajfon"
+mvn clean compile exec:java -Dexec.mainClass="io.mankea.tools.imgrenamer.Application" -Dexec.args="-d /media/aleksandar/TerraData/photo/_ajfon"
 ```
 
 Native tracing args:

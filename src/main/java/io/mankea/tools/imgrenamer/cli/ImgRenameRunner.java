@@ -1,6 +1,6 @@
-package io.mankea.tools.img_renamer.cli;
+package io.mankea.tools.imgrenamer.cli;
 
-import io.mankea.tools.img_renamer.model.ImgFile;
+import io.mankea.tools.imgrenamer.model.ImgFile;
 import picocli.CommandLine;
 
 import java.io.File;

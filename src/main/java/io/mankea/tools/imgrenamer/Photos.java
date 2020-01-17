@@ -1,4 +1,4 @@
-package io.mankea.tools.img_renamer;
+package io.mankea.tools.imgrenamer;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;

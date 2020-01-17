@@ -1,7 +1,7 @@
-package io.mankea.tools.img_renamer;
+package io.mankea.tools.imgrenamer;
 
-import io.mankea.tools.img_renamer.cli.CliArgsErrorHandler;
-import io.mankea.tools.img_renamer.cli.ImgRenameRunner;
+import io.mankea.tools.imgrenamer.cli.CliArgsErrorHandler;
+import io.mankea.tools.imgrenamer.cli.ImgRenameRunner;
 import picocli.CommandLine;
 
 public class Application {

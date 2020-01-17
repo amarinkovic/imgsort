@@ -1,4 +1,4 @@
-package io.mankea.tools.img_renamer.cli;
+package io.mankea.tools.imgrenamer.cli;
 
 import picocli.CommandLine;
 
