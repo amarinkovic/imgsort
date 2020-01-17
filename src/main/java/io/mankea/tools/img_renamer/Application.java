@@ -1,10 +1,8 @@
 package io.mankea.tools.img_renamer;
 
-import io.mankea.tools.img_renamer.cli.ErrorHandler;
+import io.mankea.tools.img_renamer.cli.CliArgsErrorHandler;
 import io.mankea.tools.img_renamer.cli.ImgRenameRunner;
 import picocli.CommandLine;
-
-import java.io.IOException;
 
 public class Application {
 
@@ -18,7 +16,7 @@ public class Application {
         System.out.println(CommandLine.Help.Ansi.AUTO.string(RAINBOW_BANNER));
 
         System.exit(new CommandLine(new ImgRenameRunner())
-                .setParameterExceptionHandler(new ErrorHandler())
+                .setParameterExceptionHandler(new CliArgsErrorHandler())
                 .execute(args));
     }
 }

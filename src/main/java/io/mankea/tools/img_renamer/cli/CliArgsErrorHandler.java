@@ -4,7 +4,7 @@ import picocli.CommandLine;
 
 import java.io.PrintWriter;
 
-public class ErrorHandler implements CommandLine.IParameterExceptionHandler {
+public class CliArgsErrorHandler implements CommandLine.IParameterExceptionHandler {
     @Override
     public int handleParseException(CommandLine.ParameterException e, String[] strings) throws Exception {
 

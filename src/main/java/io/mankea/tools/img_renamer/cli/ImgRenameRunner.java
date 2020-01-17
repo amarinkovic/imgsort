@@ -11,14 +11,11 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import static java.lang.String.format;
 import static java.util.Comparator.comparing;
-import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 public class ImgRenameRunner implements Callable<Integer> {
@@ -45,11 +42,19 @@ public class ImgRenameRunner implements Callable<Integer> {
     @CommandLine.Parameters(paramLabel = "folders", description = "Source and target folder paths")
     String[] paths;
 
-    @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Display this help message")
+    @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "Display help message")
     private boolean helpRequested = false;
 
     String getSourcePath() {
-        return ofNullable(paths != null ? paths[0] : null).orElseThrow(() -> new IllegalArgumentException("No source path provided"));
+        if (paths != null && paths.length > 0) {
+            String path = paths[0];
+            if(".".equals(path)) {
+                path = System.getProperty("user.dir");
+            }
+            return path;
+        } else {
+            throw new IllegalArgumentException("No source path provided");
+        }
     }
 
     String getTargetPath() {
@@ -66,11 +71,11 @@ public class ImgRenameRunner implements Callable<Integer> {
 
         Instant start = Instant.now();
 
-        System.out.println(colored(" >> Source path: ", 245) + conf.getSourcePath());
-        System.out.println(colored(" >> Destination: ", 245) + conf.getTargetPath() + "\n");
+        System.out.println(colored(" - Source path: ", 245) + conf.getSourcePath());
+        System.out.println(colored(" - Destination: ", 245) + conf.getTargetPath() + "\n");
 
         if(dryRun) {
-            System.out.println(" >> dry run\n");
+            System.out.println(" [dry run]\n");
         }
 
         File targetFolder = new File(conf.getTargetPath());
@@ -96,6 +101,7 @@ public class ImgRenameRunner implements Callable<Integer> {
             fs.stream().forEach(i -> {
                 try {
                     Files.copy(i.getFile().toPath(), targetDir.resolve(conf.prefix + "_" + df.format(counter++) + ".jpg"));
+                    System.out.print(".");
                 } catch (Exception e) {
                     System.out.println(format("Error processing: {} - {}", i.getFile().getAbsolutePath(), e.getMessage()));
                 }
