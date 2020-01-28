@@ -1,21 +1,21 @@
-package io.mankea.tools.imgrenamer.model;
+package io.mankea.tools.imgsort.model;
 
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 
-import static io.mankea.tools.imgrenamer.Photos.getDateTakenExif;
-import static io.mankea.tools.imgrenamer.Photos.getTakenNio;
+import static io.mankea.tools.imgsort.picocli.ImageUtils.getDateTakenExif;
+import static io.mankea.tools.imgsort.picocli.ImageUtils.getTakenNio;
 
-public class ImgFile {
+public class ImageFile {
 
     private File file;
     private String name;
     private Date createdAtExif;
     private Instant createdAtPlain;
 
-    public ImgFile(File file) {
+    public ImageFile(File file) {
         this.file = file;
         this.name = file.getName();
         this.createdAtExif = getDateTakenExif(file);

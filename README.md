@@ -1,4 +1,4 @@
-imgrenamer
+imgsort
 =============
 
 *Simple image renaming tool*
@@ -16,14 +16,14 @@ mvn clean install -Pnative
 
 Add natively compiled binary from `target` folder to your path and run it like this:
 ```shell script
-imgrenamer -d -p myphotos . /tmp/myphotocollection
+imgsort -d -p myphotos . /tmp/myphotocollection
 ```
 
 Below is the listing of available command-line arguments you can pass into the app:
 ```shell script
-$ imgrenamer -h
+$ imgsort -h
 
- ImgRenameTool v1.0.0
+ ImgSortTool v1.1.0
 
 Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
       [folders...]        Source and target folder paths
@@ -31,6 +31,7 @@ Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
   -h, --help              Display help message
   -o, --offset=<offset>   Counter offset, index for the first element
   -p, --prefix=<prefix>   File naming prefix
+
 ```
 
 
@@ -38,7 +39,7 @@ Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
 
 Run app from source via maven
 ```java
-mvn clean compile exec:java -Dexec.mainClass="io.mankea.tools.imgrenamer.Application" -Dexec.args="-d /media/aleksandar/TerraData/photo/_ajfon"
+mvn clean compile exec:java -Dexec.mainClass="io.mankea.tools.imgsort.Main" -Dexec.args="-d /media/aleksandar/TerraData/photo/_ajfon"
 ```
 
 Native tracing args:

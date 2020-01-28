@@ -5,16 +5,16 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mankea.tools</groupId>
-    <artifactId>imgrenamer</artifactId>
-    <version>1.0.0</version>
+    <artifactId>imgsort</artifactId>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <properties>
-
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <graalvm.version>19.3.0</graalvm.version>
-
     </properties>
 
     <dependencies>
@@ -81,7 +81,7 @@
                         </executions>
                         <configuration>
                             <skip>false</skip>
-                            <mainClass>io.mankea.tools.imgrenamer.Application</mainClass>
+                            <mainClass>io.mankea.tools.imgsort.Main</mainClass>
                             <imageName>${project.artifactId}</imageName>
                             <buildArgs>
                                 --no-fallback -H:+AddAllCharsets --verbose

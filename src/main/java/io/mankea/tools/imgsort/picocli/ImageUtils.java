@@ -1,4 +1,4 @@
-package io.mankea.tools.imgrenamer;
+package io.mankea.tools.imgsort.picocli;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @author amarinkovic
  *
  */
-public class Photos {
+public class ImageUtils {
 
 	public static Instant getTakenNio(File file) {
 		Instant taken = null;

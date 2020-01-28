@@ -1,10 +1,9 @@
-package io.mankea.tools.imgrenamer.cli;
+package io.mankea.tools.imgsort.picocli;
 
-import io.mankea.tools.imgrenamer.model.ImgFile;
+import io.mankea.tools.imgsort.model.ImageFile;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
@@ -18,7 +17,7 @@ import static java.lang.String.format;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
-public class ImgRenameRunner implements Callable<Integer> {
+public class ImgSortRunner implements Callable<Integer> {
 
     private static final String DEFAULT_TARGET_PATH = File.separator + "tmp" + File.separator + "out";
 
@@ -63,22 +62,17 @@ public class ImgRenameRunner implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        processFiles(this);
-        return 0;
-    }
-
-    private void processFiles(ImgRenameRunner conf) throws IOException {
 
         Instant start = Instant.now();
 
-        System.out.println(colored(" - Source path: ", 245) + conf.getSourcePath());
-        System.out.println(colored(" - Destination: ", 245) + conf.getTargetPath() + "\n");
+        System.out.println(colored(" - Source path: ", 245) + getSourcePath());
+        System.out.println(colored(" - Destination: ", 245) + getTargetPath() + "\n");
 
         if(dryRun) {
             System.out.println(" [dry run]\n");
         }
 
-        File targetFolder = new File(conf.getTargetPath());
+        File targetFolder = new File(getTargetPath());
         if (!targetFolder.exists()) {
             targetFolder.mkdirs();
         }
@@ -86,21 +80,21 @@ public class ImgRenameRunner implements Callable<Integer> {
         Path targetDir = targetFolder.toPath();
 
         System.out.println("Scanning files:\n");
-        List<ImgFile> fs = Files.walk(new File(conf.getSourcePath()).toPath())
+        List<ImageFile> fs = Files.walk(new File(getSourcePath()).toPath())
                 .filter(Files::isRegularFile)
                 .filter(p -> p.getFileName().toString().toLowerCase().endsWith("jpg"))
                 .map(Path::toFile)
-                .map(ImgFile::new)
-                .sorted(comparing(ImgFile::getCreatedAt))
+                .map(ImageFile::new)
+                .sorted(comparing(ImageFile::getCreatedAt))
                 .peek(this::logImg)
                 .collect(toList());
 
         if (!dryRun) {
             System.out.println(format("\n  >> Starting rename of %s images", fs.size()));
-            counter = conf.offset;
+            counter = offset;
             fs.stream().forEach(i -> {
                 try {
-                    Files.copy(i.getFile().toPath(), targetDir.resolve(conf.prefix + "_" + df.format(counter++) + ".jpg"));
+                    Files.copy(i.getFile().toPath(), targetDir.resolve(prefix + "_" + df.format(counter++) + ".jpg"));
                     System.out.print(".");
                 } catch (Exception e) {
                     System.out.println(format("Error processing: {} - {}", i.getFile().getAbsolutePath(), e.getMessage()));
@@ -110,9 +104,10 @@ public class ImgRenameRunner implements Callable<Integer> {
 
         System.out.println("\nProcessing done in: " + Duration.between(start, Instant.now()).toMillis() + " ms");
 
+        return 0;
     }
 
-    private void logImg(ImgFile i) {
+    private void logImg(ImageFile i) {
         System.out.println(
                 sdf.format(i.getCreatedAt())
                         + " | diff: " + i.daysDiff() + (i.daysDiff() < 100 ? "\t" : "") + " | "

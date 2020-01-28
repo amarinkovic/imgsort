@@ -1,4 +1,4 @@
-package io.mankea.tools.imgrenamer.cli;
+package io.mankea.tools.imgsort.picocli;
 
 import picocli.CommandLine;
 
