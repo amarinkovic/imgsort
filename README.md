@@ -14,7 +14,7 @@ mvn clean install -Pnative
 
 ## Motivation
 
-This tool was made to cope with the issue of having photos of a single event (i.e. road trip, birthday etc.) comming from various sources. Photos are all names using different naming convention and not easy to view in chronologycal order. What this tool does is reads the EXIF information of when the photo was actally taken, if any, otherwise uses a file created timestamp to name the files in chronologycal sequence.
+This tool was made to cope with the issue of having photos of a single event (i.e. road trip, birthday etc.) comming from various sources. Photos are all names using different naming convention and not easy to view in chronologycal order. What this tool does is reads the EXIF information of when the photo was actally taken, if any, otherwise uses a file created timestamp to name the files in chronological sequence.
 
 ## Usage instructions
 
