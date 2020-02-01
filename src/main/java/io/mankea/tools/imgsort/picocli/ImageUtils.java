@@ -55,7 +55,7 @@ public class ImageUtils {
 	}
 
 	public static Map<String, String> getMetadata(File file) {
-		Map<String, String> data = new HashMap<String, String>();
+		Map<String, String> data = new HashMap<>();
 		try {
 			Metadata metadata = ImageMetadataReader.readMetadata(file);
 			metadata.getDirectories().forEach(d->d.getTags().forEach(t->data.put(t.getTagName(), d.getDescription(t.getTagType()))));
