@@ -49,9 +49,7 @@ public class ImageUtils {
 	}
 
 	public static Date getDateModified(File file) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(file.lastModified());
-		return cal.getTime();
+		return Date.from(Instant.ofEpochMilli(file.lastModified()));
 	}
 
 	public static Map<String, String> getMetadata(File file) {
