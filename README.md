@@ -42,7 +42,7 @@ Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
 ## Notes
 
 ### Cross-compilation
-If you happen to need to be abel to cross-compile the code, i.e. to make a native linux binary on a mac, run the build from within this container:
+If you happen to need to be able to cross-compile the code, i.e. to make a native linux binary on a mac, run the build from within this container:
 ```
 docker run -it -v $(pwd):/code -w /code --name cross_compiler quay.io/quarkus/centos-quarkus-maven:19.3.1-java11 /bin/sh
 ```
