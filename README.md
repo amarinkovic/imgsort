@@ -41,12 +41,18 @@ Usage: <main class> [-dh] [-o=<offset>] [-p=<prefix>] [folders...]
 
 ## Notes
 
-Run app from source via maven
+### Cross-compilation
+If you happen to need to be abel to cross-compile the code, i.e. to make a linux binary on a mac, run the build from within this container:
+```
+docker run -it -v $(pwd):/code -w /code --name cross_compiler quay.io/quarkus/centos-quarkus-maven:19.3.1-java11 /bin/sh
+```
+### Run from source
+To run the app directly from source code via maven, issue the following command:
 ```java
 mvn clean compile exec:java -Dexec.mainClass="io.mankea.tools.imgsort.Main" -Dexec.args="-d /media/aleksandar/TerraData/photo/_ajfon"
 ```
-
-Native tracing args:
+### Native tracing
+Append this arguments to the command line:
 ```java
 -agentlib:native-image-agent=trace-output=trace-file.json
 ```
