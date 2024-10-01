@@ -1,5 +1,3 @@
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/402/badge)](https://bestpractices.coreinfrastructure.org/projects/402)
-
 imgsort
 =============
 
